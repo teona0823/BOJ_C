@@ -3,52 +3,52 @@
 
 int compare(const void* a, const void* b)
 {
-    return (*(int*)a - *(int*)b);
+	return (*(int*)a - *(int*)b);
 }
 
-int check(int arr[], int left, int right, int num)
+int search(int arr[], int s, int n)
 {
-    int mid = (left + right) / 2;
+	int l = 0, r = n - 1;
 
-    if (num == arr[mid])
-        return 1;
+	while (l <= r)
+	{
+		int m = (l + r) / 2;
+		if (s == arr[m])
+			return 1;
 
-    else if (num < arr[mid])
-    {
-        if (left == right)
-            return 0;
-        else
-            check(arr, left, mid, num);
-    }
+		else if (s > arr[m])
+			l = m + 1;
+		else
+			r = m - 1;
+	}
 
-    else
-    {
-        if (left == right)
-            return 0;
-        else
-            check(arr, mid + 1, right, num);
-    }
+	return 0;
 }
-
-int arr1[500000];
-int arr2[500000];
 
 int main()
 {
-    int n, m;
+	int n, m;
+	scanf("%d", &n);
 
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++)
-        scanf("%d", &arr1[i]);
+	int* arr1 = (int*)malloc(sizeof(int) * n);
 
-    qsort(arr1, n, sizeof(int), compare);
+	for (int i = 0; i < n; i++)
+		scanf("%d", &arr1[i]);
 
-    scanf("%d", &m);
-    for (int i = 0; i < m; i++)
-        scanf("%d", &arr2[i]);
+	scanf("%d", &m);
 
-    for (int i = 0; i < m; i++)
-        printf("%d ", check(arr1, 0, n - 1, arr2[i]));
+	int* arr2 = (int*)malloc(sizeof(int) * m);
 
-    return 0;
+	for (int i = 0; i < m; i++)
+		scanf("%d", &arr2[i]);
+
+	qsort(arr1, n, sizeof(int), compare);
+
+	for (int i = 0; i < m; i++)
+		printf("%d ", search(arr1, arr2[i], n));
+
+	free(arr1);
+	free(arr2);
+
+	return 0;
 }
