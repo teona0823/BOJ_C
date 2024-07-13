@@ -2,15 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-char s[10000][501];
-char str[10000][501];
+char hear[500000][21];
+char see[500000][21];
+char hns[500000][21];
 
 int compare(char* str1, char* str2)
 {
 	return strcmp(str1, str2);
 }
 
-int search(char str[][501], char s[], int n)
+int search(char str[][21], char s[], int n)
 {
 	int l = 0, r = n - 1;
 
@@ -35,23 +36,26 @@ int main()
 	scanf("%d%d", &n, &m);
 
 	for (int i = 0; i < n; i++)
-		scanf("%s", s[i]);
+		scanf("%s", hear[i]);
 
 	for (int i = 0; i < m; i++)
-		scanf("%s", str[i]);
+		scanf("%s", see[i]);
 
-	qsort(s, n, sizeof(s[0]), compare);
-	qsort(str, m, sizeof(str[0]), compare);
+	qsort(hear, n, sizeof(hear[0]), compare);
+	qsort(see, m, sizeof(see[0]), compare);
 
 	int cnt = 0;
 
 	for (int i = 0; i < m; i++)
 	{
-		if (search(s, str[i], n))
-			cnt++;
+		if (search(hear, see[i], n))
+			strcpy(hns[cnt++], see[i]);
 	}
 
 	printf("%d\n", cnt);
+
+	for (int i = 0; i < cnt; i++)
+		printf("%s\n", hns[i]);
 
 	return 0;
 }
